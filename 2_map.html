@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map - Exploring Green Space Accessibility in Chengdu City</title>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles_map.css">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <!-- 🔹 顶部导航 -->
+    <div id="navbar">
+        <button class="nav-item" data-section="back">
+            <span><i class="fa-solid fa-arrow-left"></i></span> Back
+        </button>        
+        <button class="nav-item active" data-section="perCapita">Green Space Distribution Across Chengdu Districts</button>
+        <button class="nav-item" data-section="accessibility">15-Minute Accessibility to Green Spaces</button>
+        <button class="nav-item" data-section="transport">15-Minute Access from Public Transport Hubs</button>
+    </div>
+
+    <div id="container">
+        <div id="map"></div>
+
+        <!-- 右侧内容区 -->
+        <div id="sidebar">
+
+            <!-- 人均绿地页面 -->
+            <div id="perCapita" class="content-section">
+                <h3>Green Space in Chengdu Distrcts</h3>
+                <p class="chart-description">
+                    The distribution of <strong>green space</strong> in each district of <strong>Chengdu</strong> varies according to urban development and natural landscape. 
+                    <strong>Shuangliu</strong> (<strong>44.92 m² per capita</strong>) has an abundance of green space, which is largely influenced by the development of the <strong>Tianfu New Area</strong>, 
+                    which prioritises ecological planning. In contrast, <strong>Pujiang</strong> (<strong>35.59 m² per capita</strong>) seems to have a higher amount of green space per capita, 
+                    which is mainly due to its <strong>low population density</strong> rather than an abundance of parkland.
+                </p>
+                <p class="chart-description">
+                    <strong>Central urban areas</strong> such as <strong>Jinniu</strong> (<strong>7.93 m² per capita</strong>), 
+                    <strong>Jinjiang</strong> (<strong>7.00 m² per capita</strong>) and <strong>Chenghua</strong> (<strong>5.12 m² per capita</strong>) 
+                    have <strong>limited green space</strong> due to <strong>dense urbanisation and population</strong>. 
+
+                    Meanwhile, areas such as <strong>Dayi</strong> (<strong>0.55 m² per capita</strong>) and <strong>Dujiangyan</strong> (<strong>2.61 m² per capita</strong>) 
+                    rank <strong>low in terms of green space per capita</strong>, not because of a lack of greenery, but because most of the land consists of 
+                    <strong>nature reserves</strong> and <strong>scenic spots</strong> rather than <strong>urban parks</strong>. 
+                
+                    <strong>Longquanyi</strong> (<strong>23.65 m² per capita</strong>) and <strong>Jintang</strong> (<strong>14.87 m² per capita</strong>) 
+                    maintain a <strong>moderate balance</strong> between <strong>development</strong> and <strong>green coverage</strong>.
+                </p>
+                <p class="chart-description">
+                    This highlights the importance of considering <strong>population density</strong> and <strong>land use</strong> 
+                    when assessing <strong>green space availability</strong>. 
+                
+                    <strong>Higher density areas</strong> need <strong>better access to parks</strong>, while areas with <strong>natural landscapes</strong> 
+                    can <strong>integrate parks into urban planning</strong>.   
+                </p>
+                <div id="bar-chart-container">
+                    <div id="bar-chart"></div>
+                </div>
+            </div>
+
+            <!-- 可达性页面 -->
+            <div id="accessibility" class="content-section hidden">
+                <h3>Accessibility to Green Space</h3>
+                <p class="layer-description">Accessibility analyses of parks in Chengdu reveal different levels of accessibility within 5, 10 and 15 minute walking and cycling distances.</p>
+                <button id="toggle-walking" class="toggle-button">Walking Accessibility</button>
+                <p class="layer-description"><strong>Walking accessibility: </strong>Accessibility is high in the city centre area, especially within the third ring, with most parks within a 5-10 minute walk. However, in suburban and rural areas, accessibility is significantly lower due to the more dispersed distribution of parks and the reduced density of the road network.</p>
+
+                <button id="toggle-biking" class="toggle-button">Cycling Accessibility</button>
+                <p class="layer-description"><strong>Cycling accessibility: </strong>cycling extends accessibility to parks, with much of the urban core covered within 10 to 15 minutes. Outlying areas, while still benefiting from cycling access, have significant gaps in park distribution.</p>
+                <p Class="layer-description"><strong>Overall trends:</strong> While the central areas of Chengdu provide good access to green spaces in close proximity, peripheral areas of the main city face challenges in ensuring equitable access to parks. Improving green corridors and last kilometre connections could enhance accessibility in these areas.</p>
+                <div id="legend-wrapper">
+                    <h4>Legend</h4>
+                    <div class="legend">
+                        <div><span class="legend-box walk1-5"></span> To Green Spaces - Walk: 5 min</div>
+                        <div><span class="legend-box walk1-10"></span> To Green Spaces - Walk: 10 min</div>
+                        <div><span class="legend-box walk1-15"></span> To Green Spaces - Walk: 15 min</div>    
+
+                    <!-- 骑行可达性 -->
+                        <div><span class="legend-box bike1-5"></span> To Green Spaces - Bike: 5 min</div>
+                        <div><span class="legend-box bike1-10"></span> To Green Spaces - Bike: 10 min</div>
+                        <div><span class="legend-box bike1-15"></span> To Green Spaces - Bike: 15 min</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 公交可达性页面 -->
+            <div id="transport" class="content-section hidden">
+                <h3>Accessibility from Public Transport Spots</h3>
+                <p class="layer-description">
+                    The analysis of park accessibility via public transport in Chengdu reveals variations in how efficiently residents can reach green spaces within 15 minutes from metro and bus stations.
+                </p>
+                <!-- 按钮 -->
+                <!-- "Bus Stops" 和 "Metro Stations" -->
+                <div class="bus-metro-toggle">
+                    <button id="toggle-bus" class="toggle-button">Bus Stops</button>
+                    <button id="toggle-metro" class="toggle-button">Metro Stations</button>
+                </div>
+                <button id="toggle-stations-walking" class="toggle-button">Walking Accessibility</button>
+                <p class="layer-description">
+                    <strong>Walking accessibility:</strong> In the main urban areas, many parks are within a 5 to 10 minute walk of public transport stops, ensuring good connectivity. 
+                    However, in suburban areas and neighbouring cities and counties, parks are less accessible on foot due to fewer transport links and longer distances between green spaces.
+                </p>
+ 
+                <button id="toggle-stations-biking" class="toggle-button">Cycling Accessibility</button>
+                <p class="layer-description">
+                    <strong>Cycling accessibility:</strong> Cycling extends the accessibility of parks, with most urban areas within a 15-minute ride of a public transport stop. 
+                    This improves accessibility to green spaces, especially in neighbourhoods where parks are not directly adjacent to stations.
+                </p>
+                <p class="layer-description">
+                    <strong> Overall trend:</strong> The main urban area of Chengdu benefits from a highly integrated network of public transport and parks, 
+                    while peripheral areas may need additional transport routes or better cycling infrastructure to improve accessibility to green spaces.
+                </p>
+
+            <!-- 图例 -->
+            <div id="legend-wrapper">
+                <h4>Legend</h4>
+                <div class="legend">
+                    <div><span class="legend-box bus-stop"></span> Bus Stops</div>
+                    <div><span class="legend-box metro-station"></span> Metro Stations</div>
+                    <div><span class="legend-box walk2-5"></span> From Stations - Walk: 5 min</div>
+                    <div><span class="legend-box walk2-10"></span> From Stations - Walk: 10 min</div>
+                    <div><span class="legend-box walk2-15"></span> From Stations - Walk: 15 min</div>    
+
+                    <div><span class="legend-box bike2-5"></span> From Stations - Bike: 5 min</div>
+                    <div><span class="legend-box bike2-10"></span> From Stations - Bike: 10 min</div>
+                    <div><span class="legend-box bike2-15"></span> From Stations - Bike: 15 min</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+    <script src="map.js"></script>
+
+</body>
+</html>

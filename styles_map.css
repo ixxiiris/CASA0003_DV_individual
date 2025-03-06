@@ -1,0 +1,224 @@
+/* 导入 Google 字体 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden; /*避免全局滚动*/
+}
+
+
+/* 右侧栏内容 */
+.content-section {
+    display: none;
+}
+
+.content-section:not(.hidden) {
+    display: block;
+}
+
+.nav-item.active {
+    background-color: #4A6C50;
+}
+
+.bar {
+    height: 20px;
+    background-color: #7ea386;
+    transition: width 0.3s ease-in-out;
+}
+
+/* 顶部导航栏 */
+#navbar {
+    display: flex;
+    justify-content: space-around;
+    background: #4a7c59;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 6px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+}
+.nav-item i {
+    margin-right: 4px;   /* 图标*/
+}
+
+.nav-item:hover, .nav-item.active {
+    background: #386641;
+    border-radius: 5px;
+}
+
+/* 主要布局 */
+#container {
+    display: flex;
+    height: calc(100vh - 50px);
+    margin-top: 50px;
+    overflow: hidden;
+}
+
+/* 地图区域 */
+#map {
+    width: 72%;
+    height: 100%;
+}
+
+/* 右侧内容区域 */
+#sidebar {
+    width: 28%;
+    height: (100vh - 50px);
+    background: #f4f4f4;
+    overflow-y: auto;
+    padding: 20px;
+    padding-bottom: 20px;
+}
+
+/* 条形图 */
+#bar-chart-container {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* 调整标题和描述文本的间距 */
+h3 {
+    margin-bottom: 8px;
+}
+
+/* 调整段落 `p` 的间距 */
+.layer-description {
+    margin-bottom: 6px; 
+    font-size: 15px; 
+    line-height: 1.4; 
+}
+
+/* 文字 */
+.chart-description {
+    text-align: justify; 
+    max-width: 600px;
+    line-height: 1.2;
+    font-size: 15px;
+    margin: 0 auto; 
+    padding: 10px 10px; 
+}
+
+/* 交互按钮 */
+.toggle-button {
+    width: 100%;
+    padding: 8px; 
+    margin-bottom: 6px; 
+    border: none;
+    background: #4a7c59;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+}
+
+/* 按钮 hover 效果 */
+.toggle-button:hover {
+    background: #386641;
+}
+
+/* 让按钮和下方文本的间距更紧凑 */
+.toggle-button + p {
+    margin-top: 4px;
+}
+
+/* "Bus Stops" 和 "Metro Stations"  */
+.bus-metro-toggle {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+}
+
+/* 让并排按钮不会太大 */
+.bus-metro-toggle .toggle-button {
+    flex: 1;
+    padding: 6px 8px; 
+    font-size: 13px; 
+}
+
+/* **让 Legend 固定在 sidebar 底部** */
+#legend-wrapper {
+    position: sticky;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9); /* 半透明背景 */
+    padding: 10px 15px;
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+/* **调整 Legend 标题，去掉默认 margin** */
+#legend-wrapper h4 {
+    margin: 0;
+    padding-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* **调整 legend 使其更紧凑** */
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; 
+    font-size: 14px;
+}
+
+/* **让 legend 颜色方块正确显示** */
+.legend-box {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+}
+
+/* 步行可达性图例颜色 */
+.walk1-5 {background: #e34b3370;}
+.walk1-10 {background: #fc8d5976;}
+.walk1-15 {background: #fdcb8a5d;}
+
+/* 骑行可达性图例颜色 */
+.bike1-5 {background: #08459474;}
+.bike1-10 {background: #74a9cfa3;}
+.bike1-15 {background: #bdc9e19f;}
+
+/* 步行可达性图例颜色 */
+.walk2-5 {background: #e34b3370;}
+.walk2-10 {background: #fc8d5976;}
+.walk2-15 {background: #fdcb8a5d;}
+
+/* 骑行可达性图例颜色 */
+.bike2-5 {background: #08459474;}
+.bike2-10 {background: #74a9cfa3;}
+.bike2-15 {background: #bdc9e19f;}
+
+/* 让公交站和地铁站的图例变成圆点 */
+.bus-stop, .metro-station {
+    border-radius: 50%;  /* 变成圆形 */
+    border: 1px solid #ffffff; /* 设置白色边框 */
+}
+
+/* 公交站颜色 */
+.bus-stop {background: #d295bf;}
+
+/* 地铁站颜色 */
+.metro-station {background: #7e52a0;}
