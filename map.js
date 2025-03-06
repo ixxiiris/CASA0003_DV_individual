@@ -97,19 +97,6 @@ map.addLayer({
     filter: ['==', 'name', '']  // 初始不高亮任何区域
 }, 'districts-fill-layer');
 
-// // **鼠标悬停阴影层**
-// map.addLayer({
-//     id: 'district-hover-shadow',
-//     type: 'fill',
-//     source: 'districts',
-//     'source-layer': '0chengdu_districts_green_area-2yq96u',
-//     paint: {
-//         'fill-color': '#00C8FF', 
-//         'fill-opacity': 0.15
-//     },
-//     filter: ['==', 'name', '']
-// }, 'districts-fill-layer');
-
     // **加载公园绿地数据**
     map.addSource('green-spaces', {
         type: 'vector',
@@ -529,11 +516,38 @@ map.on('load', function () {
 // **跳转回主页**
 document.querySelector('[data-section="back"]').addEventListener("click", function () {
     window.location.href = "1_main_page.html";  
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const navItems = document.querySelectorAll(".nav-item");
-    const sections = document.querySelectorAll(".content-section");
+}); 
+    // **三张地图切换**
+    document.addEventListener("DOMContentLoaded", function () {
+        const navItems = document.querySelectorAll(".nav-item");
+        const sections = document.querySelectorAll(".content-section");
+        const sidebar = document.getElementById("sidebar"); // 获取可滚动的侧边栏
+    
+        navItems.forEach(item => {
+            item.addEventListener("click", function () {
+                navItems.forEach(nav => nav.classList.remove("active"));
+                this.classList.add("active");
+    
+                const sectionId = this.getAttribute("data-section");
+    
+                sections.forEach(section => {
+                    section.classList.add("hidden");
+                    section.classList.remove("fade-in");
+                });
+    
+                const activeSection = document.getElementById(sectionId);
+                if (activeSection) {
+                    activeSection.classList.remove("hidden");
+                    activeSection.classList.add("fade-in");
+                }
+    
+                // **滚动 `#sidebar` 到顶部**
+                sidebar.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+        });   
 
     // **监听导航栏点击**
     navItems.forEach(item => {

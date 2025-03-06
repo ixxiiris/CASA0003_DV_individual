@@ -11,11 +11,11 @@
 
 /* 主页背景 */
 body {
-  background-image: url('img/mainpage.jpg'); /* 确保路径正确 */
-  background-size: cover;  /* 让背景填满整个屏幕 */
-  background-position: center center; /* 居中对齐 */
-  background-repeat: no-repeat; /* 防止重复 */
-  height: 100vh;  /* 让背景高度等于视口高度 */
+  background-image: url('https://raw.githubusercontent.com/ixxiiris/CASA0003_DV_individual/main/img/mainpage.jpg'); 
+  background-size: cover;  
+  background-position: center center; 
+  background-repeat: no-repeat;
+  height: 100vh; 
   margin: 0;
   padding: 0;
   display: flex;
@@ -23,7 +23,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: white; /* 让文字变白 */
+  color: white; 
   position: relative;
 }
 
@@ -192,5 +192,20 @@ nav a:hover {
   .cta button {
     font-size: 16px;
     padding: 12px 25px;
+  }
+}
+
+/* 页面淡入动画 */
+body {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
