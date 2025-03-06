@@ -11,10 +11,9 @@ Users can navigate between these visualisations, hover over districts for detail
 ### 2.2 Data Processing & Technical Implementation
 1. Accessibility analysis: Isochrones (travel-time catchment areas) were computed using Python (NetworkX + OSMnx) to assess accessibility via walking, cycling, and public transport. The computed isochrones were converted into polygons for visualisation.
 2. Geospatial data processing: OSM data was processed and integrated with Mapbox Tilesets to generate interactive layers.
-3. Geospatial data processing: OSM data was processed and integrated with Mapbox Tilesets to generate interactive layers.
-4. Data hosting for stability: Processed GeoJSON files were uploaded to Mapbox, where they were converted into tile datasets to enable stable and efficient data rendering.
-5. D3.js bar chart: Displays per capita green space distribution for comparative analysis.
-6. Frontend technologies: The website is developed with HTML, CSS, and JavaScript, ensuring device responsiveness.
+3. Data hosting for stability: Processed GeoJSON files were uploaded to Mapbox, where they were converted into tile datasets to enable stable and efficient data rendering.
+4. D3.js bar chart: Displays per capita green space distribution for comparative analysis.
+5. Frontend technologies: The website is developed with HTML, CSS, and JavaScript, ensuring device responsiveness.
 ## 3. Data Source
 The visualisation relies on data from:
 1. Green space, road network, and transport data: Extracted from OpenStreetMap (OSM) via OSMnx and Overpass API.
