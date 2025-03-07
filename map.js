@@ -515,7 +515,7 @@ map.on('load', function () {
 
 // **跳转回主页**
 document.querySelector('[data-section="back"]').addEventListener("click", function () {
-    window.location.href = "1_main_page.html";  
+    window.location.href = "1_home_page.html";  
 }); 
     // **三张地图切换**
     document.addEventListener("DOMContentLoaded", function () {
